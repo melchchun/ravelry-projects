@@ -1,0 +1,6 @@
+
+@mixin box_shadow($offset_x, $offset_y, $blur: 5px, $color: #888) {
+  box-shadow: $offset_x $offset_y $blur $color;
+  -moz-box-shadow: $offset_x $offset_y $blur $color;
+  -webkit-box-shadow: $offset_x $offset_y $blur $color;
+}

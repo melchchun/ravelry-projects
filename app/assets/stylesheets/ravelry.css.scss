@@ -1,0 +1,7 @@
+@import "convenience";
+
+.thumbnail {
+  @include box_shadow(2px, 2px, 10px, #888);
+  height: 155px;
+  width: 155px;
+}
