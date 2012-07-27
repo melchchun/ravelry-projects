@@ -3,10 +3,27 @@ class Project
 
   def initialize(data_hash)
     @data = data_hash
+    @thumbnail = Thumbnail.new(@data["thumbnail"])
   end
-
   def notes
     @data["notes"]
+  end
+  def thumbnail
+    @thumbnail
+  end
+  def url
+    @data["url"]
+  end
+  def name
+    @data["name"]
+  end
+
+  def thumbnail_url
+    @thumbnail.url
+  end
+
+  def upload_photos_url
+    url + '/photos'
   end
 
   def self.load_projects
@@ -83,9 +100,23 @@ class Project
   def todo_list
     # this is a pretty brittle parse, would possibly switch out for an html parsing gem...
     # ... or a todo object off of a project, rather than co-opting notes
-    # regex = /(todo|to do)(.*)[^(todo|to do)]/xim
-    regex = /(todo|to)(.*)[^(todo|to do)]/xim
+    regex = /(todo|to do)(.*)[^(todo|to do)]/xim
     match = regex.match(notes)
     match ? match[2] : nil
+  end
+
+  def thumbnail_or_upload_url
+    thumbnail_url || upload_photos_url
+  end
+
+  class Thumbnail
+    def initialize(data_hash)
+      @thumbnail_data = data_hash
+    end
+
+    def url
+      @thumbnail_data ? @thumbnail_data["src"] : nil
+    end
+    # { "src":"http://images4.ravelrycache.com/uploads/melch/113348834/IMG_1233_square.jpg","flickrUrl":"#","medium":"http://images4.ravelrycache.com/uploads/melch/113348834/IMG_1233_medium.jpg" }
   end
 end

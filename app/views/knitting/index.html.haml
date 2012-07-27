@@ -170,11 +170,19 @@
 
   %script{ :src => "http://api.ravelry.com/projects/melch/progress.json?key=2b6c9a96b8f69cfc5e4a0dd060c39e68ad782633&status=in-progress&notes=true" }
 
-- @projects.each do |p|
-  .thumbnail
-  #{ p.todo_list }
-  %script
-    / RavelryThing.drawProgressBars({color: '#6eafc6', width: 200, projects: ['#{ p["permalink"] }'] });
+.page-title
+  My Ravelry To Do List
+%table
+  - @projects.each do |p|
+    %tr.project
+      %td.thumbnail-cell
+        = link_to(p.thumbnail_url ? "" : "upload image", p.upload_photos_url, :style => thumbnail_style(p), :class => 'thumbnail' )
+        = link_to(p.name, p.url)
+      %td
+        #{ p.todo_list.try(:html_safe) }
+
+#powered_by
+  Powered by #{ link_to('Ravelry', 'http://www.ravelry.com/', :target => '_blank') }
 
 
 
