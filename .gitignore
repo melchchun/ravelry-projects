@@ -30,5 +30,5 @@ rerun.txt
 pickle-email-*.html
 
 # ignore api credential file
-/config/api.yml
+config/api.yml
 
