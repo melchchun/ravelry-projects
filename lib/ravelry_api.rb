@@ -3,7 +3,7 @@ class RavelryApi
 
   def self.get_project_data
     response = []
-    api_hash = YAML.load_file(Rails.root + 'config/api.yml').with_indifferent_access
+    api_hash = YAML.load_file(File.dirname(__FILE__) + '/../config/api.yml').with_indifferent_access
     url = "http://api.ravelry.com/projects/#{ api_hash[:username] }/progress.json?key=#{ api_hash[:access_token] }&status=in-progress&notes=true"
     net_response = Net::HTTP.get_response(URI.parse(url))
     status_code = net_response.fetch('status')
