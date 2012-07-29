@@ -35,7 +35,7 @@ class Project
   def todo_list
     # this is a pretty brittle parse, would possibly switch out for an html parsing gem...
     # ... better to have a todo input to control the format
-    notes.split(/to.?do/)[1]
+    notes ? notes.split(/to.?do/)[1] : nil
   end
 
   def thumbnail_or_upload_url

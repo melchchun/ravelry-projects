@@ -34,6 +34,10 @@ class ProjectTest
           p.todo_list.should eq("\nlist here\n")
         end
       end
+      it "should not cause error for nil notes" do
+        p = Project.new({ "notes" => nil })
+        p.todo_list.should eq(nil)
+      end
     end
   end
 end
