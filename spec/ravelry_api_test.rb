@@ -51,6 +51,7 @@ class RavelryApiTest
         success.should eq(false)
         response.should eq("JSON response from server cannot be parsed")
       end
+
       it "returns [false, 'status error'] when status failed" do
         status_code = "500"
         @net_response.stub(:body).and_return("some message")
@@ -62,6 +63,20 @@ class RavelryApiTest
         success, response = RavelryApi.get_project_data
         success.should eq(false)
         response.should eq("Received #{ status_code } status from server")
+      end
+      it "returns [false, 'can't find api file'] if api file is not present" do
+        YAML.should_receive(:load_file).and_raise(Errno::ENOENT.new("config/api.yml"))
+
+        success, response = RavelryApi.get_project_data
+        success.should eq(false)
+        response.should eq("No such file or directory - config/api.yml")
+      end
+      it "returns [false, 'can't find api file'] if api file does not parse" do
+        YAML.should_receive(:load_file).and_raise(ArgumentError.new("syntax error"))
+
+        success, response = RavelryApi.get_project_data
+        success.should eq(false)
+        response.should eq("syntax error")
       end
     end
   end

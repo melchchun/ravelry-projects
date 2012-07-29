@@ -35,9 +35,7 @@ class Project
   def todo_list
     # this is a pretty brittle parse, would possibly switch out for an html parsing gem...
     # ... better to have a todo input to control the format
-    regex = /(todo|to do)(.*)[^(todo|to do)]/xim
-    match = regex.match(notes)
-    match ? match[2] : nil
+    notes.split(/to.?do/)[1]
   end
 
   def thumbnail_or_upload_url

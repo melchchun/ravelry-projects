@@ -23,8 +23,17 @@ class ProjectTest
         result.should eq([false, "error message"])
       end
     end
-    it "needs tests around the todo parsing"
-    it "will be able to parse todo list from todo, to do, and to-do"
-    # then update readme
+    context "todo_list" do
+      ["todo", "to-do", "to do"].each do |todo|
+        it "should return everything after #{ todo }" do
+          p = Project.new({ "notes" => "#{ todo }\nlist here" })
+          p.todo_list.should eq("\nlist here")
+        end
+        it "should return everything after #{ todo } but not after the second" do
+          p = Project.new({ "notes" => "#{ todo }\nlist here\n#{ todo }\nbut not here" })
+          p.todo_list.should eq("\nlist here\n")
+        end
+      end
+    end
   end
 end
